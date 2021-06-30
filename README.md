@@ -11,4 +11,4 @@ Flying over the open sea is energetically costly for terrestrial birds. Despite 
 4) all_figures.R: provides the code for reproducing all the figures in the manuscript, including the main text and the supplementary material. All figures are plotted using R Base Graphics.
 5) functions.R: includes the functions used in various other scripts. 
 
-# All input data are provided in the Dryad repository accessible via: 
+All input data are provided in the Dryad repository accessible via: 
