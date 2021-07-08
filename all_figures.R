@@ -4,6 +4,7 @@
 # Elham Nourani, PhD. June. 2021; enourani@ab.mpg.de
 #-----------------------------------------------------------------
 
+library(tidyverse)
 library(TeachingDemos) #for subplot
 library(itsadug) #for gam plots
 library(mgcv)
@@ -234,7 +235,6 @@ all_data <- ann_cmpl %>%
             list(z = ~(scale(.)))) 
 
 # posterior means of coefficients
-
 graph <- as.data.frame(summary(M)$fixed)
 colnames(graph)[which(colnames(graph)%in%c("0.025quant","0.975quant"))]<-c("Lower","Upper")
 colnames(graph)[which(colnames(graph)%in%c("0.05quant","0.95quant"))]<-c("Lower","Upper")
@@ -258,11 +258,11 @@ graph$Factor_n <- as.numeric(graph$Factor)
 X11(width = 4.1, height = 2.7)
 par(cex = 0.7,
     oma = c(0,3.7,0,0),
-    mar = c(3, 4.1, 0.5, 1),
+    mar = c(3, 4.15, 0.5, 1),
     bty = "l"
 )
 
-plot(0, type = "n", labels = FALSE, tck = 0, xlim = c(-1.6,2.7), ylim = c(0.7,4.3), xlab = "Estimate", ylab = "")
+plot(0, type = "n", labels = FALSE, tck = 0, xlim = c(-2,3), ylim = c(0.7,4.3), xlab = "Estimate", ylab = "")
 
 #add vertical line for zero
 abline(v = 0, col = "grey30",lty = 2)
@@ -273,7 +273,7 @@ arrows(graph$Lower, graph$Factor_n,
        col = "cornflowerblue", code = 3, length = 0.03, angle = 90, lwd = 2) #angle of 90 to make the arrow head as straight as a line
 
 #add axes
-axis(side= 1, at= c(-1,0, 1,2), labels= c("-1", "0", "1", "2"), 
+axis(side= 1, at = c(-2, -1, 0, 1, 2, 3), labels = c(-2, -1, 0, 1, 2, 3), 
      tick=T ,col = NA, col.ticks = 1, tck=-.015)
 
 axis(side= 2, at= c(1:4),
@@ -420,26 +420,26 @@ par(mfrow = c(1,1), bty="n",
 )
 
 
-plot(0, bty = "l", labels = FALSE, tck = 0, xlim = c(-1.2,2.5), ylim = c(0.5,4.5), xlab = "", ylab = "")
+plot(0, bty = "l", labels = FALSE, tck = 0, xlim = c(-2.5,3), ylim = c(0.5,4.5), xlab = "", ylab = "")
 #add vertical line for zero
 abline(v = 0, col = "grey30",lty = 2)
 
 points(tab_dt$mean, as.numeric(tab_dt$ID) - 0.2, col = "darkgoldenrod2", pch = 19, cex = 1.3)
 arrows(tab_dt$IClower, as.numeric(tab_dt$ID) - 0.2,
        tab_dt$ICupper, as.numeric(tab_dt$ID) - 0.2,
-       col = "darkgoldenrod2", code = 3, length = 0.03, angle = 90) #angle of 90 to make the arrow head as straight as a line
+       col = "darkgoldenrod2", code = 3, length = 0.03, angle = 90, lwd = 2) #angle of 90 to make the arrow head as straight as a line
 
 points(tab_wspt$mean, as.numeric(tab_wspt$ID) , col = "cornflowerblue", pch = 19, cex = 1.3)
 arrows(tab_wspt$IClower, as.numeric(tab_wspt$ID) ,
        tab_wspt$ICupper, as.numeric(tab_wspt$ID) ,
-       col = "cornflowerblue", code = 3, length = 0.03, angle = 90) #angle of 90 to make the arrow head as straight as a line
+       col = "cornflowerblue", code = 3, length = 0.03, angle = 90, lwd = 2) 
 
 points(tab_wspt_var$mean, as.numeric(tab_wspt_var$ID) + 0.2, col = "pink1", pch = 19, cex = 1.3)
 arrows(tab_wspt_var$IClower, as.numeric(tab_wspt_var$ID) + 0.2,
        tab_wspt_var$ICupper, as.numeric(tab_wspt_var$ID) + 0.2,
-       col = "pink1", code = 3, length = 0.03, angle = 90) #angle of 90 to make the arrow head as straight as a line
+       col = "pink1", code = 3, length = 0.03, angle = 90, lwd = 2) 
 
-axis(side= 1, at = c(-1,0,1,2), labels = c(-1,0,1,2), 
+axis(side= 1, at = c(-2,-1,0,1,2), labels = c(-2,-1,0,1,2), 
      tick=T ,col = NA, col.ticks = 1, tck=-.015)
 
 axis(side= 2, at= c(1:4), 
@@ -449,7 +449,7 @@ axis(side= 2, at= c(1:4),
      las = 2) 
 
 #add legend
-legend(x = 1.3, y = 4.5, legend = c( "Wind support var", "Wind support", expression(italic(paste(Delta,"T")))), 
+legend(x = 1.25, y = 4.5, legend = c( "Wind support var", "Wind support", expression(italic(paste(Delta,"T")))), 
        col = c("pink1", "cornflowerblue","darkgoldenrod1"), #coords indicate top-left
        pch = 19, bg="white",bty="n", cex = 0.9)
 
