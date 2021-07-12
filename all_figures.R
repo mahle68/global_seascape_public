@@ -458,21 +458,22 @@ legend(x = 1.25, y = 4.5, legend = c( "Wind support var", "Wind support", expres
 
 load("annotated_steps.RData") #ann_cmpl; This dataframe includes used and alternative steps and can be reproduced using step_generation.R
 
-X11(width = 9, height = 7)
+X11(width = 6, height = 7)
 
-par(mfrow= c(2,3), 
+par(mfrow= c(2,2), 
     oma = c(0,0,3,0), 
-    las = 1)
+    las = 1,
+    mgp = c(0,1,0))
 
-labels <- c(expression(italic(paste(Delta,"T"))), "Wind support", "Wind speed")
-variables <- c("delta_t", "wind_support", "wind_speed")
-v_variables <- c("delta_t_var", "wind_support_var","wind_speed_var")
+labels <- c(expression(italic(paste(Delta,"T"))), "Wind support")
+variables <- c("delta_t", "wind_support")
+v_variables <- c("delta_t_var", "wind_support_var")
 
 for(i in 1:length(variables)){
   
   boxplot(ann_cmpl[,variables[i]] ~ ann_cmpl[,"species"], data = ann_cmpl, boxfill = NA, border = NA, main = labels[i], xlab = "", ylab = "")
   if(i == 1){
-    legend("topleft", legend = c("used","available"), fill = c(alpha("darkgoldenrod1", 0.9),"gray"), bty = "n")
+    legend("topleft", legend = c("used","available"), fill = c(alpha("darkgoldenrod1", 0.9),"gray"), bty = "n", cex = 0.8)
   }
   boxplot(ann_cmpl[ann_cmpl$used == 1, variables[i]] ~ ann_cmpl[ann_cmpl$used == 1,"species"], outcol = alpha("black", 0.2),
           yaxt = "n", xaxt = "n", add = T, boxfill = alpha("darkgoldenrod1", 0.9),  lwd = 0.7, outpch = 20, outcex = 0.8,
@@ -482,13 +483,13 @@ for(i in 1:length(variables)){
           boxwex = 0.25, at = 1:length(unique(ann_cmpl[ann_cmpl$used == 1 , "species"])) + 0.15)
   
 }
-mtext("Instantaneous values at each step", side = 3, outer = T, cex = 1.3)
+mtext("Instantaneous values at each step", side = 3, outer = T, cex = 1.2)
 
 for(i in 1:length(v_variables)){
   
   boxplot(ann_cmpl[,v_variables[i]] ~ ann_cmpl[,"species"], data = ann_cmpl, boxfill = NA, border = NA, main = labels[i], xlab = "", ylab = "")
   if(i == 1){
-    legend("topleft", legend = c("used","available"), fill = c(alpha("darkgoldenrod1", 0.9),"gray"), bty = "n")
+    legend("topleft", legend = c("used","available"), fill = c(alpha("darkgoldenrod1", 0.9),"gray"), bty = "n", cex = 0.8)
   }
   boxplot(ann_cmpl[ann_cmpl$used == 1,v_variables[i]] ~ ann_cmpl[ann_cmpl$used == 1,"species"], outcol = alpha("black", 0.2),
           yaxt = "n",xaxt = "n", add = T, boxfill = alpha("darkgoldenrod1", 0.9), lwd = 0.7,  outpch = 20, outcex = 0.8,
@@ -498,7 +499,7 @@ for(i in 1:length(v_variables)){
           boxwex = 0.25, at = 1:length(unique(ann_cmpl$species)) + 0.15)
 } 
 
-mtext("40-year variances at each step", side = 3, outer = T, cex = 1.3, line = -25)
+mtext("40-year variances at each step", side = 3, outer = T, cex = 1.2, line = -20)
 
 
 # ---------- Fig S3: maps with annotated tracking points #####
